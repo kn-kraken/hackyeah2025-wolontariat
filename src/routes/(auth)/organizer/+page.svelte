@@ -1,56 +1,11 @@
 <script>
 	// --- MOCK DATA ---
 	// In a real application, this data would be fetched from your backend API.
-	let upcomingEvents = [
-		{
-			id: 3,
-			title: 'Annual Charity Marathon',
-			date: '2025-10-25',
-			location: 'Waterfront Path',
-			participants: 42,
-			capacity: 50
-		},
-		{
-			id: 4,
-			title: 'Tech Workshop for Seniors',
-			date: '2025-11-12',
-			location: 'Community Center',
-			participants: 8,
-			capacity: 10
-		},
-		{
-			id: 7,
-			title: 'Holiday Food Drive',
-			date: '2025-12-05',
-			location: 'Downtown Square',
-			participants: 15,
-			capacity: 25
-		}
-	];
+	export let data;
 
-	let messages = [
-		{
-			id: 101,
-			senderName: 'Alice Johnson',
-			eventName: 'Annual Charity Marathon',
-			message: "Hi! I'd love to help out at the marathon. Do you still need people for the morning shift at the water stations?",
-			timestamp: '2 hours ago'
-		},
-		{
-			id: 102,
-			senderName: 'Ben Carter',
-			eventName: 'Tech Workshop for Seniors',
-			message: 'I have experience in IT support and would be a great fit for the tech workshop. My application has been sent. Looking forward to hearing back!',
-			timestamp: '1 day ago'
-		},
-		{
-			id: 103,
-			senderName: 'Clara Davis',
-			eventName: 'Annual Charity Marathon',
-			message: 'Is there a place to store personal belongings securely during the event?',
-			timestamp: '3 days ago'
-		}
-	];
+	let upcomingEvents = data.upcomingEvents;
+
+	let messages = data.unreadMessages;
 
 	// --- FORM STATE ---
 	let newEvent = {

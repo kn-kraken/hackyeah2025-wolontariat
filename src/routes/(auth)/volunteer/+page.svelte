@@ -1,70 +1,13 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import Chatbot from '$lib/Chatbot.svelte';
+import Link from '$lib/Link.svelte';
+import { onMount } from 'svelte';
+
+	export let data;
 
 	// --- MOCK DATA ---
 	// In a real app, you would fetch this from an API.
-	let allEvents = [
-		{
-			id: 1,
-			title: 'Community Garden Cleanup',
-			organizer: 'Green Thumbs Society',
-			location: 'City Park, Downtown',
-			duration: '4 hours',
-			description:
-				'Help us weed, plant, and beautify our beloved community garden. A great way to get your hands dirty and meet fellow nature lovers.',
-			requirements: ['Age 16+', 'Gardening gloves recommended']
-		},
-		{
-			id: 2,
-			title: 'Local Animal Shelter Support',
-			organizer: 'Paws & Friends',
-			location: '123 Animal Lane',
-			duration: '3 hours',
-			description:
-				'Assist with walking dogs, cleaning enclosures, and socializing with cats. Your help provides essential care for animals awaiting their forever homes.',
-			requirements: ['Comfortable with animals', 'Age 18+']
-		},
-		{
-			id: 3,
-			title: 'Annual Charity Marathon',
-			organizer: 'Run for Hope Foundation',
-			location: 'Waterfront Path',
-			duration: '6 hours (flexible shifts)',
-			description:
-				'We need volunteers to manage water stations, guide runners, and help with setup/teardown for our biggest fundraising event of the year.',
-			requirements: ['Energetic attitude', 'First-Aid/CPR certification a plus']
-		},
-		{
-			id: 4,
-			title: 'Tech Workshop for Seniors',
-			organizer: 'Digital Bridge Inc.',
-			location: 'Community Center',
-			duration: '2 hours',
-			description:
-				'Help seniors learn basic computer and smartphone skills. Patience and good communication are key to empowering our elderly community.',
-			requirements: ['Proficient with smartphones/computers', 'Excellent communication skills']
-		},
-		{
-			id: 5,
-			title: 'Soup Kitchen Service',
-			organizer: 'The Helping Hand',
-			location: 'St. James Church Basement',
-			duration: '3 hours',
-			description:
-				'Prepare and serve warm meals to those in need. A humbling and rewarding experience that directly impacts the community.',
-			requirements: ['Food handler\'s permit preferred', 'Ability to stand for long periods']
-		},
-		{
-			id: 6,
-			title: 'Book Drive Sorting',
-			organizer: 'Literacy for All',
-			location: 'Public Library Warehouse',
-			duration: 'Flexible',
-			description:
-				'Sort through donated books to help us organize them for distribution to schools and community centers. A quiet and impactful role.',
-			requirements: ['Attention to detail']
-		}
-	];
+	let allEvents = data.allEvents;
 
 	// --- STATE ---
 	let isLoading = true;
@@ -107,14 +50,11 @@
 	}
 
 	// Helper to get unique locations for the filter dropdown
-	$: uniqueLocations = [...new Set(allEvents.map((event) => event.location))];
+	$: uniqueLocations = [...new Set(allEvents.map((event) => event.Latitude))];
 </script>
 
-<div class="bg-gray-50 min-h-screen font-sans text-gray-800">
-	<nav>
-		<a href="/volunteer">Wydarzenia</a>
-		<a href="/volunteer/chat">Wydarzenia</a>
-	</nav>
+<div class="flex">
+	<div class="grow">
 	<main class="container mx-auto px-4 py-8 md:py-12">
 		<header class="text-center mb-8 md:mb-12">
 			<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Volunteer Opportunities</h1>
@@ -209,4 +149,6 @@
 			</div>
 		{/if}
 	</main>
+	</div>
+	<div class="w-[200px]"><Chatbot/></div>
 </div>
