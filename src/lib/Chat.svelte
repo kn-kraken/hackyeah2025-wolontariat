@@ -122,10 +122,9 @@
 	}
 </script>
 
-<div class="font-sans antialiased bg-gray-100 text-gray-800">
-	<div class="h-screen w-full flex overflow-hidden">
+	<div class="grow w-full flex items-strech overflow-hidden font-sans antialiased bg-gray-100 text-gray-800">
 		<aside
-			class="w-full md:w-1/3 lg:w-1/4 h-screen bg-white border-r border-gray-200 flex flex-col transition-transform duration-300"
+			class="w-full md:w-1/3 lg:w-1/4 bg-white border-r border-gray-200 flex flex-col transition-transform duration-300"
 			class:translate-x-0={mobileView === 'list'}
 			class:-translate-x-full={mobileView === 'chat'}
 			class:md:translate-x-0={true}
@@ -163,7 +162,7 @@
 		</aside>
 
 		<main
-			class="absolute top-0 left-0 w-full h-screen md:static bg-gray-50 flex flex-col transition-transform duration-300"
+			class="absolute top-0 left-0 w-full md:static bg-gray-50 flex flex-col transition-transform duration-300"
 			class:translate-x-0={mobileView === 'chat'}
 			class:translate-x-full={mobileView === 'list'}
 			class:md:translate-x-0={true}
@@ -228,4 +227,3 @@
 			{/if}
 		</main>
 	</div>
-</div>
