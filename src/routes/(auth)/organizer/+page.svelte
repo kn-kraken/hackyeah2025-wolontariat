@@ -113,16 +113,15 @@
 				<h2 class="text-2xl font-bold text-gray-900 mb-4">Recent Messages</h2>
 				<div class="space-y-4">
 					{#if messages.length > 0}
-						{#each messages as msg (msg.id)}
+						{#each messages as msg}
 							<div class="bg-white rounded-lg shadow-md p-4">
 								<div class="flex justify-between items-start">
 									<div>
-										<p class="font-bold text-gray-800">{msg.senderName}</p>
-										<p class="text-xs text-blue-600 font-semibold">{msg.eventName}</p>
+										<p class="font-bold text-gray-800">{msg.SenderId}</p>
 									</div>
-									<p class="text-xs text-gray-500 flex-shrink-0 ml-2">{msg.timestamp}</p>
+									<p class="text-xs text-gray-500 flex-shrink-0 ml-2">{msg.time}</p>
 								</div>
-								<p class="text-gray-700 mt-2 text-sm">{msg.message}</p>
+								<p class="text-gray-700 mt-2 text-sm">{msg.body}</p>
 								<button class="text-sm font-semibold text-blue-600 hover:text-blue-800 mt-3">Reply</button>
 							</div>
 						{/each}
