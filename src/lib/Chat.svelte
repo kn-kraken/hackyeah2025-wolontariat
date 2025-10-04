@@ -150,7 +150,7 @@
 							<div class="flex justify-between items-end mt-1">
 								<p class="text-sm text-gray-500 truncate">{conv.lastMessage}</p>
 								{#if conv.unreadCount > 0}
-									<span class="bg-blue-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+									<span class="bg-blue-light text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
 										{conv.unreadCount}
 									</span>
 								{/if}
@@ -186,14 +186,14 @@
 						{#each selectedConversation.messages as msg (msg.id)}
 							<div class="flex" class:justify-end={msg.sender === 'me'} class:justify-start={msg.sender === 'participant'}>
 								<div
-									class="max-w-md lg:max-w-lg px-4 py-2 rounded-xl"
-									class:bg-blue-600={msg.sender === 'me'}
-									class:text-white={msg.sender === 'me'}
-									class:bg-gray-200={msg.sender === 'participant'}
-									class:text-gray-800={msg.sender === 'participant'}
+									class="max-w-md text-white lg:max-w-lg px-4 py-2 rounded-xl bg-linear-to-br"
+									class:from-blue-light={msg.sender === 'me'}
+									class:to-blue-dark={msg.sender === 'me'}
+									class:from-red-light={msg.sender === 'participant'}
+									class:to-red-dark={msg.sender === 'participant'}
 								>
 									<p>{msg.text}</p>
-									<p class="text-xs mt-1" class:text-blue-200={msg.sender === 'me'} class:text-gray-500={msg.sender === 'participant'}>
+									<p class="text-xs mt-1 text-gray-200">
 										{msg.timestamp}
 									</p>
 								</div>
@@ -212,7 +212,7 @@
 						/>
 						<button
 							type="submit"
-							class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+							class="bg-linear-to-br from-green-light to-green-dark hover:bg-blue-700 text-white rounded-full p-3 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
 								<path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.428A1 1 0 009.05 16.57l4.122-4.122a1 1 0 000-1.414l-4.122-4.122a1 1 0 00-1.052-.092l-5 1.428a1 1 0 00-1.17 1.408l7 14a1 1 0 001.788 0l7-14a1 1 0 00-1.169-1.409l-5 1.428A1 1 0 0010.945 4.43l-4.122 4.122a1 1 0 000 1.414l4.122 4.122a1 1 0 001.052.092l5-1.428a1 1 0 001.17-1.408l-7-14z" />
