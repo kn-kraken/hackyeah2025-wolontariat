@@ -23,9 +23,9 @@ CREATE TABLE User (
 CREATE TABLE Message (
     SenderId INTEGER,
     ReceiverId INTEGER,
-    body TEXT NOT NULL,
-    read BOOLEAN NOT NULL,
-    time DATETIME NOT NULL,
+    Body TEXT NOT NULL,
+    Read BOOLEAN NOT NULL,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (SenderId) REFERENCES User(UserId),
     FOREIGN KEY (ReceiverId) REFERENCES User(UserId)
 );
@@ -241,3 +241,18 @@ INSERT INTO Opinion (VolunteerId, EventId, OpinionText) VALUES
 (11, 11,'Ewa aktywnie pomagała w organizacji turnieju.'), 
 (12, 12,'Jakub był bardzo punktualny i sumienny.'), 
 (14, 14,'Mateusz z dużym zaangażowaniem wspierał młodzież.');
+
+INSERT INTO Message (SenderId, ReceiverId, Body, Read, Time) VALUES
+(1, 16, 'Dzień dobry, chciałbym potwierdzić swoją obecność na sprzątaniu bulwarów.', 1, '2025-09-01 12:30'),
+(16, 1, 'Cześć Jan, dziękujemy za zgłoszenie! Do zobaczenia na miejscu.', 0, '2025-09-01 13:00'),
+(2, 16, 'Cześć, czy mogę zabrać ze sobą kolegów na sprzątanie bulwarów?', 0, '2025-09-02 14:00'),
+(5, 16, 'Witam, czy są jeszcze miejsca na sprzątanie bulwarów?', 0, '2025-09-03 10:00'),
+(12, 16, 'Dzień dobry, chciałbym wziąć udział w zbiórce ubrań.', 0, '2025-09-04 11:30'),
+(2, 23, 'Witam, czy mogę zabrać ze sobą kolegów na warsztaty teatralne?', 1, '2025-09-05 15:30'),
+(23, 2, 'Cześć Anno, oczywiście! Im więcej osób, tym lepiej.', 0, '2025-09-05 16:00'),
+(3, 16, 'Czy mogę jeszcze dołączyć do zbiórki żywności?', 1, '2025-09-07 18:30'),
+(16, 3, 'Cześć Piotrze, tak! Zapraszamy serdecznie.', 1, '2025-09-07 19:00'),
+(4, 25, 'Dzień dobry, czy są jeszcze miejsca na bieg dla zdrowia?', 1, '2025-09-09 14:30'),
+(25, 4, 'Cześć Katarzyno, tak! Możesz się jeszcze zapisać.', 1, '2025-09-09 15:00'),
+(5, 22, 'Witam, chciałbym się zapisać na lekcje angielskiego dla seniorów.', 1, '2025-09-11 16:30'),
+(22, 5, 'Cześć Tomaszu, świetnie! Zapraszamy do biblioteki.', 0, '2025-09-11 17:00');
