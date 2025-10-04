@@ -116,6 +116,11 @@ INSERT INTO User (Username, AvatarUrl) VALUES
 ('magdalena.szymanska', 'https://i.pravatar.cc/150?u=magdalena'),
 ('pawel.dabrowski',     'https://i.pravatar.cc/150?u=pawel'),
 ('alicja.krawczyk',     'https://i.pravatar.cc/150?u=alicja'),
+('ewa.mazur',           'https://i.pravatar.cc/150?u=ewa'),
+('jakub.pawlak',        'https://i.pravatar.cc/150?u=jakub'),
+('dorota.krol',         'https://i.pravatar.cc/150?u=dorota'),
+('mateusz.wojciechowski','https://i.pravatar.cc/150?u=mateusz'),
+('karolina.piotrowska', 'https://i.pravatar.cc/150?u=karolina'),
 ('fundacja.krakow',     'https://i.pravatar.cc/150?u=fundacja'),
 ('szkola.nr1',          'https://i.pravatar.cc/150?u=szkola1'),
 ('uniwersytet.krakowski','https://i.pravatar.cc/150?u=uniwersytet'),
@@ -123,15 +128,9 @@ INSERT INTO User (Username, AvatarUrl) VALUES
 ('fundacja.zdrowie',    'https://i.pravatar.cc/150?u=fundacja'),
 ('centrum.kultury',     'https://i.pravatar.cc/150?u=centrum'),
 ('biblioteka.miejska',  'https://i.pravatar.cc/150?u=biblioteka'),
-('szkola.nr2',          'https://i.pravatar.cc/150?u=szkola2'),
 ('teatr.krakowski',     'https://i.pravatar.cc/150?u=teatr'),
-('szkola.nr3',          'https://i.pravatar.cc/150?u=szkola3'),
-('szkola.nr4',          'https://i.pravatar.cc/150?u=szkola4'),
-('szkola.nr5',          'https://i.pravatar.cc/150?u=szkola5'),
 ('fundacja.zwierzak',   'https://i.pravatar.cc/150?u=fundacja'),
 ('sport.krakow',        'https://i.pravatar.cc/150?u=sport'),
-('instytut.edukacji',   'https://i.pravatar.cc/150?u=instytut'),
-('organizacja.pozarzadowa','https://i.pravatar.cc/150?u=organizacja');
 
 -------------------------------------------------------
 -- Volunteers (UserId 1–15)
