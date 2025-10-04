@@ -130,7 +130,7 @@ INSERT INTO User (Username, AvatarUrl) VALUES
 ('biblioteka.miejska',  'https://i.pravatar.cc/150?u=biblioteka'),
 ('teatr.krakowski',     'https://i.pravatar.cc/150?u=teatr'),
 ('fundacja.zwierzak',   'https://i.pravatar.cc/150?u=fundacja'),
-('sport.krakow',        'https://i.pravatar.cc/150?u=sport'),
+('sport.krakow',        'https://i.pravatar.cc/150?u=sport');
 
 -------------------------------------------------------
 -- Volunteers (UserId 1–15)
