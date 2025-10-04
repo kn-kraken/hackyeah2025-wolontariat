@@ -37,6 +37,7 @@ export interface Volunteer {
 export interface Event {
   EventId: number;
   Name: string;
+  Description: string;
   Category: 'Environment' | 'Education' | 'Health' | 'Community' | 'Culture' | 'Sports' | 'Animal Welfare';
   Latitude: number;
   Longitude: number;

@@ -11,7 +11,7 @@ import { onMount } from 'svelte';
 
 	// --- STATE ---
 	let isLoading = true;
-	let events: any[] = [];
+	let events: typeof allEvents = [];
 	let searchQuery = '';
 	let locationFilter = '';
 
@@ -29,12 +29,12 @@ import { onMount } from 'svelte';
 	$: filteredEvents = events.filter((event) => {
 		const searchMatch =
 			searchQuery.length < 2 || // Show all if search is short
-			event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			event.organizer.toLowerCase().includes(searchQuery.toLowerCase());
+			event.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			event.Description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			event.OrganizationName.toLowerCase().includes(searchQuery.toLowerCase());
 
 		const locationMatch =
-			locationFilter === '' || event.location.toLowerCase().includes(locationFilter.toLowerCase());
+			locationFilter === '' || event.Latitude.toString().toLowerCase().includes(locationFilter.toLowerCase());
 
 		return searchMatch && locationMatch;
 	});
@@ -57,14 +57,14 @@ import { onMount } from 'svelte';
 	<div class="grow">
 	<main class="container mx-auto px-4 py-8 md:py-12">
 		<header class="text-center mb-8 md:mb-12">
-			<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Volunteer Opportunities</h1>
-			<p class="mt-2 text-lg text-gray-600">Find and join events to make a difference in your community.</p>
+			<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Nadchodzace Wolontariaty</h1>
+			<p class="mt-2 text-lg text-gray-600">Znajdz i dolacz do wolontariatow wplywajac pozytywnie na swoja lokalna spolecznosc</p>
 		</header>
 
-		<div class="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-8 sticky top-4 z-10">
+		<div class="bg-white p-4 sm:p-6 rounded-xl red-shadow mb-8 sticky top-4 z-10">
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div class="md:col-span-2">
-					<label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search Events</label>
+					<label for="search" class="block text-sm font-medium text-gray-700 mb-1">Wyszukaj Wydarzenia</label>
 					<div class="relative">
 						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -75,19 +75,19 @@ import { onMount } from 'svelte';
 							type="search"
 							id="search"
 							bind:value={searchQuery}
-							placeholder="Search by title, organizer, or keyword..."
-							class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+							placeholder="Szukaj po nazwie, organizatorze, lub slowach kluczowych..."
+							class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none focus:ring-red-light focus:border-red-light transition"
 						/>
 					</div>
 				</div>
 				<div>
-					<label for="location" class="block text-sm font-medium text-gray-700 mb-1">Filter by Location</label>
+					<label for="location" class="block text-sm font-medium text-gray-700 mb-1">Filtruj po Lokalizacji</label>
 					<select
 						id="location"
 						bind:value={locationFilter}
-						class="w-full py-2 px-3 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+						class="w-full py-2 px-3 border border-gray-300 bg-white rounded-lg focus:ring-2 focus:ring-red-light focus:border-red-light transition"
 					>
-						<option value="">All Locations</option>
+						<option value="">Wszystkie Lokalizacje</option>
 						{#each uniqueLocations as location}
 							<option value={location}>{location}</option>
 						{/each}
@@ -100,29 +100,29 @@ import { onMount } from 'svelte';
 			<p class="text-center text-gray-500">Loading events...</p>
 		{:else if filteredEvents.length > 0}
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-				{#each filteredEvents as event (event.id)}
+				{#each filteredEvents as event (event.EventId)}
 					<div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-xl">
 						<div class="p-6 flex-grow">
 							<div class="mb-4">
-								<p class="text-sm font-semibold text-blue-600">{event.organizer}</p>
-								<h2 class="text-2xl font-bold text-gray-900 mt-1">{event.title}</h2>
+								<p class="text-sm font-semibold text-blue-light">{event.OrganizationName}</p>
+								<h2 class="text-2xl font-bold text-gray-900 mt-1">{event.Name}</h2>
 							</div>
 
 							<div class="space-y-3 text-gray-600 mb-4">
 								<div class="flex items-center">
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-									<span>{event.location}</span>
+									<span>{event.Latitude}</span>
 								</div>
 								<div class="flex items-center">
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
-									<span>{event.duration}</span>
+									<span>{event.StartTime} - {event.EndTime}</span>
 								</div>
 							</div>
 
-							<p class="text-gray-700 mb-4 text-sm leading-relaxed">{event.description}</p>
+							<p class="text-gray-700 mb-4 text-sm leading-relaxed">{event.Description}</p>
 
 							<div>
-								<h3 class="text-sm font-semibold text-gray-800 mb-2">Requirements:</h3>
+								<h3 class="text-sm font-semibold text-gray-800 mb-2">Wymagania:</h3>
 								<ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
 									{#each event.requirements as req}
 										<li>{req}</li>
@@ -133,10 +133,10 @@ import { onMount } from 'svelte';
 
 						<div class="bg-gray-50 p-4">
 							<button
-								on:click={() => handleRequestParticipation(event.id)}
-								class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
+								on:click={() => handleRequestParticipation(event.UserId)}
+								class="w-full bg-linear-to-r from-blue-light to-blue-dark text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-300"
 							>
-								Request to Join
+								Dolacz do wydarzenia
 							</button>
 						</div>
 					</div>

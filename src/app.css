@@ -10,3 +10,15 @@
   --color-yellow-light: #f9d82e;
   --color-yellow-dark: #d46330;
 }
+
+.red-shadow {
+  transform-style: preserve-3d;
+}
+.red-shadow::before {
+  content: "";
+  position: absolute;
+  inset: 0px; /* control the spread */
+  transform: translate3d(1px, 1px, -1px); /* control the offsets */
+  background: linear-gradient(var(--color-red-light), var(--color-red-dark));
+  filter: blur(10px); /* control the blur */
+} 
