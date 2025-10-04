@@ -37,7 +37,7 @@ CREATE TABLE Organization (
     UserId INTEGER PRIMARY KEY,  
     Name TEXT NOT NULL,
     Description TEXT NOT NULL,
-    Type TEXT CHECK(Type IN ('NGO','Foundation','School','University','Cultural Institution','Public Institution')) NOT NULL,
+    Type TEXT CHECK(Type IN ('Organizacja Pozarządowa','Fundacja','Szkoła','Uniwersytet','Instytucja Kultury','Jednostka Miejska')) NOT NULL,
     FOREIGN KEY (UserId) REFERENCES User(UserId)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE Volunteer (
 CREATE TABLE Event (
     EventId INTEGER PRIMARY KEY AUTOINCREMENT,
     Name TEXT NOT NULL,
-    Category TEXT CHECK(Category IN ('Environment','Education','Health','Community','Culture','Sports','Animal Welfare')),
+    Category TEXT CHECK(Category IN ('Środowisko','Edukacja','Zdrowie','Społeczność','Kultura','Sport','Zwierzęta','Inne')),
     Description TEXT NOT NULL,
     Latitude REAL NOT NULL,
     Longitude REAL NOT NULL,
@@ -165,16 +165,6 @@ INSERT INTO Organization (UserId, Name, Description, Type) VALUES
 (23,'Teatr Krakowski','Teatr organizujący spektakle dla mieszkańców.','Instytucja Kultury'),
 (24,'Fundacja Zwierzak','Fundacja zajmująca się pomocą zwierzętom.','Fundacja'),
 (25,'Sport Kraków','Miejska jednostka sportowa.','Jednostka Miejska');
-
--------------------------------------------------------
--- Schools
--------------------------------------------------------
-INSERT INTO School (UserId) VALUES
-(17),
-(18),
-(21),
-(22),
-(23);
 
 -------------------------------------------------------
 -- Events (30 examples)
