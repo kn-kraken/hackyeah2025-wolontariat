@@ -215,7 +215,7 @@
 							class="bg-linear-to-br from-green-light to-green-dark hover:bg-blue-700 text-white rounded-full p-3 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-								<path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.428A1 1 0 009.05 16.57l4.122-4.122a1 1 0 000-1.414l-4.122-4.122a1 1 0 00-1.052-.092l-5 1.428a1 1 0 00-1.17 1.408l7 14a1 1 0 001.788 0l7-14a1 1 0 00-1.169-1.409l-5 1.428A1 1 0 0010.945 4.43l-4.122 4.122a1 1 0 000 1.414l4.122 4.122a1 1 0 001.052.092l5-1.428a1 1 0 001.17-1.408l-7-14z" />
+								<polygon points="40,20 180,100 40,180" fill="black"/>
 							</svg>
 						</button>
 					</form>
