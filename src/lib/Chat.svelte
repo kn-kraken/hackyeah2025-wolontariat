@@ -215,8 +215,8 @@
 							class="bg-linear-to-br from-green-light to-green-dark hover:bg-blue-700 text-white rounded-full p-3 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-								<polygon points="40,20 180,100 40,180" fill="black"/>
-							</svg>
+								<path d="M4 4l12 6-12 6V4z" />
+						  	</svg>
 						</button>
 					</form>
 				</div>
