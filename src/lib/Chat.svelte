@@ -6,44 +6,44 @@
 	let conversations = [
 		{
 			id: 1,
-			participantName: 'Alice Johnson',
+			participantName: 'Robert Januszewski',
 			avatarUrl: 'https://i.pravatar.cc/150?u=alice',
-			eventName: 'Annual Charity Marathon',
-			lastMessage: "Hi! I'd love to help out at the marathon. Do you still need people for...",
-			timestamp: '2 hours ago',
+			eventName: 'Coroczny Maraton Charytatywny',
+			lastMessage: "Cześć! Chętnie pomogę przy maratonie. Czy nadal potrzebujecie osób na...",
+			timestamp: '2 godziny temu',
 			unreadCount: 1,
 			messages: [
-				{ id: 101, sender: 'participant', text: 'Hi there!', timestamp: 'Yesterday' },
+				{ id: 101, sender: 'participant', text: 'Czołem!', timestamp: 'Wczoraj' },
 				{
 					id: 102,
 					sender: 'participant',
-					text: "Hi! I'd love to help out at the marathon. Do you still need people for the morning shift at the water stations?",
-					timestamp: '2 hours ago'
+					text: "Chętnie pomogę przy maratonie. Czy nadal potrzebujecie osób na ranną zmianę przy stanowiskach z wodą?",
+					timestamp: '2 godziny temu'
 				}
 			]
 		},
 		{
 			id: 2,
-			participantName: 'Ben Carter',
+			participantName: 'Beata Kruch',
 			avatarUrl: 'https://i.pravatar.cc/150?u=ben',
-			eventName: 'Tech Workshop for Seniors',
-			lastMessage: 'Perfect, thank you for the confirmation!',
-			timestamp: '1 day ago',
+			eventName: 'Warsztaty Techniczne dla Seniorów',
+			lastMessage: 'Super, dzięki za potwierdzenie!',
+			timestamp: '1 dzień temu',
 			unreadCount: 0,
 			messages: [
 				{
 					id: 201,
 					sender: 'participant',
-					text: 'I have experience in IT support and would be a great fit for the tech workshop.',
-					timestamp: '2 days ago'
+					text: 'Mam doświadczenie w branży IT i byłbym świetnym kandydatem na warsztaty techniczne.',
+					timestamp: '2 dni temu'
 				},
 				{
 					id: 202,
 					sender: 'me',
-					text: 'That sounds great, Ben. We would be happy to have you. Please confirm your availability for next Saturday.',
-					timestamp: '1 day ago'
+					text: 'Brzmi świetnie, Beato, będziemy szczęśliwi, mogąc Cię gościć. Proszę potwierdź swoją dostępność na przyszłą sobotę.',
+					timestamp: '1 dzień temu'
 				},
-				{ id: 203, sender: 'participant', text: 'Perfect, thank you for the confirmation!', timestamp: '1 day ago' }
+				{ id: 203, sender: 'participant', text: 'Super, dzięki za potwierdzenie!', timestamp: '1 dzień temu' }
 			]
 		},
 		{
@@ -52,12 +52,12 @@
 			avatarUrl: 'https://i.pravatar.cc/150?u=clara',
 			eventName: 'Coroczny Maraton Charytatywny',
 			lastMessage: 'Czy jest miejsce na bezpieczne przechowanie rzeczy osobistych podczas wydarzenia?',
-			timestamp: '3 days ago',
+			timestamp: '3 dni temu',
 			unreadCount: 3,
 			messages: [
-				{ id: 301, sender: 'participant', text: 'Is there a place to store personal belongings securely during the event?', timestamp: '3 days ago' },
-                { id: 302, sender: 'participant', text: 'Just following up on my question.', timestamp: '1 day ago' },
-                { id: 303, sender: 'participant', text: 'Any updates?', timestamp: '4 hours ago' }
+				{ id: 301, sender: 'participant', text: 'Czy jest miejsce na bezpieczne przechowanie rzeczy osobistych podczas wydarzenia?', timestamp: '3 dni temu' },
+                { id: 302, sender: 'participant', text: 'Tylko sprawdzam.', timestamp: '1 dzień temu' },
+                { id: 303, sender: 'participant', text: 'Coś nowego?', timestamp: '4 godziny temu' }
 			]
 		}
 	];
@@ -215,7 +215,7 @@
 							class="bg-linear-to-br from-green-light to-green-dark hover:bg-blue-700 text-white rounded-full p-3 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-								<polygon points="40,20 180,100 40,180" fill="black"/>
+								<path d="M5 2l15 8-15 8V4z" />
 							</svg>
 						</button>
 					</form>
