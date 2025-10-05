@@ -22,7 +22,7 @@ export interface Organization {
   UserId: number;
   Name: string;
   Description: string;
-  Type: 'NGO' | 'Foundation' | 'School' | 'University' | 'Cultural Institution' | 'Public Institution';
+  Type: 'Organizacja Pozarządowa' | 'Fundacja' | 'Szkoła' | 'Uniwersytet' | 'Instytucja Kultury' | 'Jednostka Miejska';
 }
 
 /** Represents a row from the 'Volunteer' table. */
@@ -38,7 +38,7 @@ export interface Event {
   EventId: number;
   Name: string;
   Description: string;
-  Category: 'Environment' | 'Education' | 'Health' | 'Community' | 'Culture' | 'Sports' | 'Animal Welfare';
+  Category: 'Środowisko' | 'Edukacja' | 'Zdrowie' | 'Społeczność' | 'Kultura' | 'Sport' | 'Zwierzęta' | 'Inne';
   Latitude: number;
   Longitude: number;
   StartTime: string; // Stored as DATETIME string

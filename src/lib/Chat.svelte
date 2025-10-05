@@ -48,10 +48,10 @@
 		},
 		{
 			id: 3,
-			participantName: 'Clara Davis',
+			participantName: 'Klara Dawidowska',
 			avatarUrl: 'https://i.pravatar.cc/150?u=clara',
-			eventName: 'Annual Charity Marathon',
-			lastMessage: 'Is there a place to store personal belongings securely during the event?',
+			eventName: 'Coroczny Maraton Charytatywny',
+			lastMessage: 'Czy jest miejsce na bezpieczne przechowanie rzeczy osobistych podczas wydarzenia?',
 			timestamp: '3 days ago',
 			unreadCount: 3,
 			messages: [
@@ -90,7 +90,7 @@
 			id: Date.now(),
 			sender: 'me',
 			text: newMessageText,
-			timestamp: 'Just now'
+			timestamp: 'Teraz'
 		};
 
 		// Add the message to the conversation
@@ -130,7 +130,7 @@
 			class:md:translate-x-0={true}
 		>
 			<div class="p-4 border-b border-gray-200 flex-shrink-0">
-				<h1 class="text-xl font-bold">Conversations</h1>
+				<h1 class="text-xl font-bold">Konwersacje</h1>
 			</div>
 
 			<div class="flex-grow overflow-y-auto">
@@ -177,7 +177,7 @@
 					<img src={selectedConversation.avatarUrl} alt={selectedConversation.participantName} class="w-10 h-10 rounded-full mr-3" />
 					<div>
 						<h2 class="text-lg font-bold text-gray-900">{selectedConversation.participantName}</h2>
-						<p class="text-sm text-gray-500">RE: {selectedConversation.eventName}</p>
+						<p class="text-sm text-gray-500">DO: {selectedConversation.eventName}</p>
 					</div>
 				</header>
 
@@ -222,7 +222,7 @@
 				</div>
 			{:else}
 				<div class="h-full flex items-center justify-center text-gray-500">
-					<p>Select a conversation to start chatting.</p>
+					<p>Wybierz konwersację, aby rozpocząć rozmowę</p>
 				</div>
 			{/if}
 		</main>
