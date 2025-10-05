@@ -16,7 +16,7 @@
 
 	onMount(async () => {
     	const L = await import('leaflet'); // <- dynamiczny import
-    	map = L.map(mapContainer).setView([52.237, 21.017], 6);
+    	map = L.map(mapContainer).setView([50.0650,19.9350], 13);
 
     	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         	attribution: '&copy; OpenStreetMap contributors'
@@ -76,8 +76,8 @@
 	<div class="grow">
 		<main class="container mx-auto px-4 py-8 md:py-12">
 			<header class="text-center mb-8 md:mb-12">
-				<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Nadchodzace Wolontariaty</h1>
-				<p class="mt-2 text-lg text-gray-600">Znajdz i dolacz do wolontariatow wplywajac pozytywnie na swoja lokalna spolecznosc</p>
+				<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Nadchodzące Wolontariaty</h1>
+				<p class="mt-2 text-lg text-gray-600">Znajdź i dołącz do wolontariatów wplywając pozytywnie na swoją lokalną społeczność</p>
 			</header>
 
 			<div class="bg-white p-4 sm:p-6 rounded-xl red-shadow mb-8 sticky top-4 z-10">
