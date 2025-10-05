@@ -40,8 +40,8 @@
 <div class="bg-gray-100 min-h-screen font-sans text-gray-800">
 	<main class="container mx-auto px-4 py-8 md:py-12">
 		<header class="mb-8 md:mb-12">
-			<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Organizer Dashboard</h1>
-			<p class="mt-2 text-lg text-gray-600">Manage your events and connect with volunteers.</p>
+			<h1 class="text-4xl md:text-5xl font-bold text-gray-900">Ekran Organizatorów</h1>
+			<p class="mt-2 text-lg text-gray-600">Zarządzaj swoimi wydarzeniami i cz sie z wolontariuszami.</p>
 		</header>
 
 		<section class="mb-12 bg-white p-6 md:p-8 rounded-xl shadow-lg">
@@ -49,7 +49,7 @@
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
 					<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/>
 				</svg>
-				Register a New Event
+				Zarejestruj nowe wydarzenie
 			</h2>
 			<form on:submit|preventDefault={handleRegisterEvent} class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div class="md:col-span-2">
@@ -74,7 +74,7 @@
 				</div>
 				<div class="md:col-span-2 text-right">
 					<button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-						Create Event
+						Utwórz wydarzenie
 					</button>
 				</div>
 			</form>
@@ -82,7 +82,7 @@
 
 		<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 gap-8">
 			<section class="lg:col-span-2">
-				<h2 class="text-2xl font-bold text-gray-900 mb-4">Your Upcoming Events</h2>
+				<h2 class="text-2xl font-bold text-gray-900 mb-4">Twoje nadchodzące wydarzenia</h2>
 				<div class="space-y-4">
 					{#if upcomingEvents.length > 0}
 						{#each upcomingEvents as event (event.id)}
@@ -104,13 +104,13 @@
 							</div>
 						{/each}
 					{:else}
-						<p class="text-gray-500 bg-white p-4 rounded-lg shadow-md">You have no upcoming events.</p>
+						<p class="text-gray-500 bg-white p-4 rounded-lg shadow-md">Nie masz nadchodzących wydarzeń.</p>
 					{/if}
 				</div>
 			</section>
 
 			<section>
-				<h2 class="text-2xl font-bold text-gray-900 mb-4">Recent Messages</h2>
+				<h2 class="text-2xl font-bold text-gray-900 mb-4">Ostatnie wiadomości</h2>
 				<div class="space-y-4">
 					{#if messages.length > 0}
 						{#each messages as msg}
@@ -122,11 +122,11 @@
 									<p class="text-xs text-gray-500 flex-shrink-0 ml-2">{msg.time}</p>
 								</div>
 								<p class="text-gray-700 mt-2 text-sm">{msg.body}</p>
-								<button class="text-sm font-semibold text-blue-600 hover:text-blue-800 mt-3">Reply</button>
+								<button class="text-sm font-semibold text-blue-600 hover:text-blue-800 mt-3">Odpowiedz</button>
 							</div>
 						{/each}
 					{:else}
-						<p class="text-gray-500 bg-white p-4 rounded-lg shadow-md">You have no new messages.</p>
+						<p class="text-gray-500 bg-white p-4 rounded-lg shadow-md">Nie masz nowych wiadomości.</p>
 					{/if}
 				</div>
 			</section>

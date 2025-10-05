@@ -97,7 +97,7 @@ import { onMount } from 'svelte';
 		</div>
 
 		{#if isLoading}
-			<p class="text-center text-gray-500">Loading events...</p>
+			<p class="text-center text-gray-500">Ładowanie wydarzeń...</p>
 		{:else if filteredEvents.length > 0}
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{#each filteredEvents as event (event.EventId)}
@@ -144,8 +144,8 @@ import { onMount } from 'svelte';
 			</div>
 		{:else}
 			<div class="text-center bg-white p-8 rounded-lg shadow-md">
-				<h3 class="text-xl font-semibold text-gray-800">No Events Found</h3>
-				<p class="text-gray-500 mt-2">Try adjusting your search or filter criteria.</p>
+				<h3 class="text-xl font-semibold text-gray-800">Nie znaleziono wydarzeń</h3>
+				<p class="text-gray-500 mt-2">Spróbuj poprawić kryteria filtrowania.</p>
 			</div>
 		{/if}
 	</main>

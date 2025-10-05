@@ -131,7 +131,7 @@ import { onMount } from 'svelte';
   />
 	<main class="container mx-auto px-4 py-8 md:py-12">
 		{#if isLoading}
-			<div class="text-center text-gray-500">Loading event details...</div>
+			<div class="text-center text-gray-500">Ładowanie szczegółów...</div>
 		{:else}
 			<section class="bg-white p-6 rounded-xl shadow-md mb-8">
 				<div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -150,12 +150,12 @@ import { onMount } from 'svelte';
 						{#if event.status === 'upcoming'}
 							<button on:click={startEvent} class="w-full md:w-auto bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
-								Start Event
+								Rozpocznij Wydarzenie
 							</button>
 						{:else if event.status === 'active'}
 							<button on:click={endEvent} class="w-full md:w-auto bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" /></svg>
-								End Event
+								Zakończ Wydarzenie
 							</button>
 						{/if}
 					</div>
@@ -164,7 +164,7 @@ import { onMount } from 'svelte';
 
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 				<section>
-					<h2 class="text-2xl font-bold text-gray-800 mb-4">Pending Requests ({event.pendingParticipants.length})</h2>
+					<h2 class="text-2xl font-bold text-gray-800 mb-4">Oczekujące zapytania ({event.pendingParticipants.length})</h2>
 					<div class="space-y-4">
 						{#each event.pendingParticipants as person (person.id)}
 							<div class="bg-white rounded-lg shadow-md p-4 transition-all hover:shadow-lg">
@@ -191,13 +191,13 @@ import { onMount } from 'svelte';
 								</div>
 							</div>
 						{:else}
-							<p class="text-gray-500 bg-white p-4 rounded-lg text-center">No pending requests.</p>
+							<p class="text-gray-500 bg-white p-4 rounded-lg text-center">Brak oczekujacych zapytań.</p>
 						{/each}
 					</div>
 				</section>
 
 				<section>
-					<h2 class="text-2xl font-bold text-gray-800 mb-4">Accepted Participants ({event.acceptedParticipants.length})</h2>
+					<h2 class="text-2xl font-bold text-gray-800 mb-4">Zaakceptowani Uczestnicy ({event.acceptedParticipants.length})</h2>
 					<div class="space-y-4">
 						{#each event.acceptedParticipants as person (person.id)}
 							<div class="bg-white rounded-lg shadow-md p-4">
@@ -211,17 +211,17 @@ import { onMount } from 'svelte';
 									</div>
 									<div class="flex-shrink-0">
 										{#if person.status === 'confirmed'}
-											<button on:click={() => checkInParticipant(person.id)} class="bg-blue-500 text-white font-semibold py-1 px-4 rounded-lg hover:bg-blue-600 text-sm transition-colors">Check-in</button>
+											<button on:click={() => checkInParticipant(person.id)} class="bg-blue-500 text-white font-semibold py-1 px-4 rounded-lg hover:bg-blue-600 text-sm transition-colors">Zamelduj się</button>
 										{:else if person.status === 'checked-in'}
-											<button on:click={() => reviewParticipant(person.id)} class="bg-yellow-500 text-white font-semibold py-1 px-4 rounded-lg hover:bg-yellow-600 text-sm transition-colors">Check-out</button>
+											<button on:click={() => reviewParticipant(person.id)} class="bg-yellow-500 text-white font-semibold py-1 px-4 rounded-lg hover:bg-yellow-600 text-sm transition-colors">Wymelduj się</button>
 										{:else}
-											<span class="text-gray-500 text-sm font-semibold">Completed</span>
+											<span class="text-gray-500 text-sm font-semibold">Ukończone</span>
 										{/if}
 									</div>
 								</div>
 							</div>
 						{:else}
-							<p class="text-gray-500 bg-white p-4 rounded-lg text-center">No accepted participants yet.</p>
+							<p class="text-gray-500 bg-white p-4 rounded-lg text-center">Brak zaakceptowanych uczestników.</p>
 						{/each}
 					</div>
 				</section>
