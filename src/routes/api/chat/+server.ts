@@ -71,14 +71,13 @@ const chromaClient = new CloudClient({
 });
 
 let collection: Collection | undefined;
-// Use 'any' type to avoid type incompatibility errors
 let app: any;
 
 async function initializeAI() {
   if (!collection) {
     collection = await chromaClient.getOrCreateCollection({ name: "events" });
   }
-
+  
   if (!app) {
     const searchEvents = tool(
       async ({ query }: { query: string }) => {
@@ -100,13 +99,10 @@ async function initializeAI() {
 
         if (!results?.ids.length) return "No events found.";
 
-        if (
-          !results.ids[0] ||
-          !results.metadatas?.[0] ||
-          !results.distances?.[0]
-        ) return "No events found.";
+        if (!results.ids[0] || !results.metadatas?.[0] || !results.distances?.[0]) 
+          return "No events found.";
 
-        return results.ids[0].map((id, idx) => {
+        return results.ids[0].map((id: string, idx: number) => {
           const metadata = results.metadatas[0]?.[idx];
           const distance = results.distances[0]?.[idx];
           const eventData = `EventId: ${id}, Name: ${metadata?.Name ?? "Unknown"}, Category: ${metadata?.Category ?? "Unknown"}, Score: ${distance !== undefined && distance !== null ? distance.toFixed(3) : "N/A"}`;
@@ -116,8 +112,7 @@ async function initializeAI() {
       },
       {
         name: "searchEvents",
-        description:
-          "Search for events by name or description using semantic similarity.",
+        description: "Search for events by name or description using semantic similarity.",
         schema: z.object({
           query: z.string().describe("Search query"),
         }),
@@ -129,8 +124,6 @@ async function initializeAI() {
         try {
           console.log(`Querying for EventId: ${eventId}`);
           const query = db.query("SELECT * FROM Event WHERE EventId = $eventId;").all({ $eventId: eventId });
-
-          console.log("DB query result:", query);
 
           if (query.length === 0) {
             return `No event found with EventId ${eventId}`;
@@ -146,7 +139,7 @@ async function initializeAI() {
           return eventData;
         } catch (err) {
           console.error("Database error:", err);
-          throw err; // rethrow so you see the error in the console
+          throw err;
         }
       },
       {
@@ -198,16 +191,15 @@ async function initializeAI() {
       temperature: 0.3,
     }).bindTools(tools);
 
-    function shouldContinue({ messages }: typeof MessagesAnnotation.State) {
-      const lastMessage = messages[messages.length - 1] as AIMessage;
-
+    function shouldContinue({ messages }: { messages: any[] }): string {
+      const lastMessage = messages[messages.length - 1];
       if (lastMessage.tool_calls?.length) {
         return "tools";
       }
       return "__end__";
     }
 
-    async function callModel(state: typeof MessagesAnnotation.State) {
+    async function callModel(state: { messages: any[] }) {
       const response = await model.invoke(state.messages);
       return { messages: [response] };
     }
@@ -227,14 +219,33 @@ export async function POST({ request }: { request: Request }) {
   try {
     await initializeAI();
     
-    const { message } = await request.json();
+    const { message, history }: { 
+      message: string; 
+      history?: Array<{ text: string; sender: 'user' | 'bot' }> 
+    } = await request.json();
     
     const systemMessage = new SystemMessage(
       "Jesteś pomocnym asystentem, który pomaga znaleźć wydarzenia wolontariackie. Udzielaj odpowiedzi w języku polskim. W przypadku pytań o wydarzenia lub organizacje, najpierw wyszukaj je za pomocą dostępnych narzędzi, a następnie przedstaw skonsolidowane wyniki użytkownikowi. Jeśli użytkownik zadaje pytanie niezwiązane uczestnictewm w wolonatariacie, wydarzeniami lub organizacjami, uprzejmie poinformuj go, że nie możesz pomóc w tej kwestii."
     );
     
+    const conversationMessages = [systemMessage];
+    
+    if (history && history.length > 0) {
+      const recentHistory = history.slice(-10);
+      
+      for (const msg of recentHistory) {
+        if (msg.sender === 'user') {
+          conversationMessages.push(new HumanMessage(msg.text));
+        } else {
+          conversationMessages.push(new SystemMessage(`Assistant: ${msg.text}`));
+        }
+      }
+    }
+    
+    conversationMessages.push(new HumanMessage(message));
+    
     const result = await app.invoke({
-      messages: [systemMessage, new HumanMessage(message)]
+      messages: conversationMessages
     });
     
     const lastMessage = result.messages[result.messages.length - 1];

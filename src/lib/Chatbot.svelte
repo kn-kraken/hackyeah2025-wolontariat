@@ -18,7 +18,10 @@
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ message: userMessage })
+					body: JSON.stringify({ 
+						message: userMessage,
+						history: messages.slice(-10)
+					})
 				});
 
 				const data = await response.json();
