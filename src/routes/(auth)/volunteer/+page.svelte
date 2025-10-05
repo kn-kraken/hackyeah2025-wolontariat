@@ -73,9 +73,15 @@
 		// dodaj nowe
 		filteredEvents.forEach(event => {
 			if (event.Latitude && event.Longitude) {
-				L.marker([event.Latitude, event.Longitude])
+				const marker = L.marker([event.Latitude, event.Longitude])
 					.addTo(map)
-					.bindPopup(`<b>${event.Name}</b><br>${event.OrganizationName}`);
+					.bindPopup(`<b>${event.Name}</b><br>${event.OrganizationName}`)
+				marker.on('click', () => {
+					handleRequestParticipation(event.UserId)
+				});
+				marker.on('mouseover', () => {
+					marker.openPopup()
+				});
 			}
 		});
 	}
