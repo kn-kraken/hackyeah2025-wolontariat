@@ -3,9 +3,19 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+import json
+import sys
+import os
 # we know some glyphs are missing, suppress warnings
-import reportlab.rl_config
-reportlab.rl_config.warnOnMissingFontGlyphs = 0
+# import reportlab.rl_config
+# reportlab.rl_config.warnOnMissingFontGlyphs = 0
+
+if len(sys.argv) < 2:
+    print("Użycie: python program.py dane.json")
+    sys.exit(1)
+
+json_file = sys.argv[1]
+
 
 font = "DejaVuSans"
 bold_font = "DejaVuSansBd"
@@ -22,7 +32,7 @@ max_width = pagesize[0] - margin
 line_separation = 20
 indent = margin / 2
 
-def hello(c, volunteer, organiser, date, event, tasks):
+def create_certificate(c, volunteer, organiser, date, event, tasks):
     c.translate(0, pagesize[1])
 
     
@@ -59,14 +69,12 @@ def wrapped_text(c, text, x, y, max_width, line_height):
     return y
 
 
-c = canvas.Canvas("hello.pdf")
-tasks = [
-    "Upiekł pizzę",
-    "Zaprojektował układ strony głównej",
-    "Napisał frontend i backend",
-    "Wypił piwo",
-    "Ułożył napis 'cyc' z bloków",
-    "Sprzedał 2 czapki przeciwko 5G",
-]
-hello(c, "Wiktor Pytlewski", "Krakow Digital Volunteer Centre", "4.10.2025r.", "HackYeah 2025", tasks)
-c.save()
+if __name__ == "__main__":
+    with open(json_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    id = 0
+    while os.path.exists(f"./certificates/zaswiadczenie_{id}.pdf"):
+        id += 1
+    c = canvas.Canvas(f"./certificates/zaswiadczenie_{id}.pdf")
+    create_certificates(c, data['volunteer'], data["organizer"], data["date"], data["event"], data["tasks"])
+    c.save()
