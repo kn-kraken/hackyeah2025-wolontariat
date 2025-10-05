@@ -1,38 +1,43 @@
-# sv
+# Aplikacja Krakowskiego Cyfrowego Centrum Wolontariatu
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+By **Krakenteers**, HackYeah 2025
 
-## Creating a project
+## Opis projektu
 
-If you're seeing this, you've probably already done this step. Congrats!
+Platforma łącząca **młodzież**, **szkoły** i **organizacje** - wszystko prosto i wygodnie.
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Funkcjonalności
 
-# create a new project in my-app
-npx sv create my-app
+- Widok wolontariusza:
+  - Dashboard z ofertami wolontariatu
+  - Interaktywna mapa
+  - Filtrowanie ofert
+  - Chatbot AI pomagający w wyszukiwaniu eventów
+  - Aplikowanie na oferty
+  - Czat z organizatorem
+- Widok organizacji:
+  - Tworzenie nowej oferty wolontariatu
+  - Przeglądanie i akceptowanie aplikacji
+  - Czat z wolontariuszami
+
+## Stos technologiczny
+
+- Aplikacja została zaimplementowana przy użyciu [SvelteKit](https://svelte.dev/docs/kit/introduction).
+- Baza danych SQLite3
+- Wektorowa baza danych ChromaDB
+- Integracja z modelami LLM OpenAI poprzez [LangGraph.js](https://langchain-ai.github.io/langgraphjs/).
+- Moduł do generacji zaświadczeń uczesnictwa w PDF zaimplementowany w Pythonie
+
+## Uruchomianie aplikacji
+
+1. Zainstaluj zależności
+
+```
+bun i
 ```
 
-## Developing
+2. Uruchm serwer developerski
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
+bun --bun run dev
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
