@@ -6,22 +6,22 @@ import { onMount } from 'svelte';
 	// In a real app, you would fetch this event data based on the page's ID parameter.
 	let event = {
 		id: 1,
-		title: 'Annual Charity Marathon',
+		title: 'Coroczny Maraton Fundacji',
 		date: '2025-10-25',
-		location: 'Waterfront Path',
+		location: 'Tauron Arena',
 		status: 'upcoming', // 'upcoming', 'active', 'finished'
 		pendingParticipants: [
 			{
 				id: 101,
 				name: 'David Lee',
 				avatarUrl: 'https://i.pravatar.cc/150?u=david',
-				skills: ['Logistics', 'Communication']
+				skills: ['Logistyka', 'Komunikacja']
 			},
 			{
 				id: 102,
 				name: 'Sophia Chen',
 				avatarUrl: 'https://i.pravatar.cc/150?u=sophia',
-				skills: ['First Aid Certified', 'Team Leadership']
+				skills: ['Certyfikat Pierwszej Pomocy', ]
 			}
 		],
 		acceptedParticipants: [
@@ -60,6 +60,23 @@ import { onMount } from 'svelte';
 				return 'bg-blue-100 text-blue-800';
 			default:
 				return 'bg-gray-100 text-gray-800';
+		}
+	}
+	function getStatusText(status) {
+		switch (status) {
+			case 'active':
+				return 'zaakceptowany'
+			case 'checked-in':
+				return 'dolaczono';
+			case 'finished':
+				return 'zakonczono'
+			case 'checked-out':
+				return 'zakonczono';
+			case 'upcoming':
+			case 'confirmed':
+				return 'zaakceptowany'
+			default:
+				return 'zaakceptowany'
 		}
 	}
 
@@ -138,9 +155,6 @@ import { onMount } from 'svelte';
 					<div>
 						<div class="flex items-center gap-3">
 							<h1 class="text-3xl md:text-4xl font-bold text-gray-900">{event.title}</h1>
-							<span class="text-sm font-medium capitalize px-3 py-1 rounded-full {getStatusClasses(event.status)}">
-								{event.status}
-							</span>
 						</div>
 						<p class="mt-2 text-lg text-gray-600">
 							{new Date(event.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} &bull; {event.location}
@@ -206,7 +220,7 @@ import { onMount } from 'svelte';
 										<img src={person.avatarUrl} alt={person.name} class="w-12 h-12 rounded-full" />
 										<div>
 											<p class="font-bold text-lg text-gray-900">{person.name}</p>
-											<span class="text-xs font-medium capitalize px-2 py-0.5 rounded-full {getStatusClasses(person.status)}">{person.status.replace('-', ' ')}</span>
+											<span class="text-xs font-medium capitalize px-2 py-0.5 rounded-full {getStatusClasses(person.status)}">{getStatusText(person.status)}</span>
 										</div>
 									</div>
 									<div class="flex-shrink-0">

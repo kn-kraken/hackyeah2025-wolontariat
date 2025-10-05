@@ -3,4 +3,4 @@
 
 </script>
 
-<Chat />
+<Chat flip/>

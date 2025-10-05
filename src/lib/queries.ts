@@ -120,12 +120,13 @@ export function getUpcomingEventsForOrganizer( organizationId: number): Event[] 
  * @param receiverId The UserId of the receiving user.
  * @returns A promise that resolves to an array of unread messages.
  */
-export function getUnreadMessagesForUser( receiverId: number): Message[] {
+export function getUnreadMessagesForUser( receiverId: number): (Message & {Name: string; Surname: string})[] {
   const query = `
     SELECT
       *
     FROM
       Message
+    JOIN User ON SenderId = UserId
     WHERE
       ReceiverId = $receiverId
       AND read = 0

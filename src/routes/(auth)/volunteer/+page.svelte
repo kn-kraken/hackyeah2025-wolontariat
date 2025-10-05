@@ -94,7 +94,7 @@
 	}
 </script>
 
-<div class="flex">
+<div class="flex relative">
 	<div class="grow">
 		<main class="container mx-auto px-4 py-8 md:py-12">
 			<header class="text-center mb-8 md:mb-12">
@@ -105,7 +105,7 @@
 			</header>
 
 			<!-- FILTERS -->
-			<div class="bg-white p-4 sm:p-6 rounded-xl red-shadow mb-8 sticky top-4 z-10">
+			<div class="bg-white p-4 sm:p-6 rounded-xl red-shadow mb-8 sticky top-4 z-20">
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 					<div class="md:col-span-2">
 						<label for="search" class="block text-sm font-medium text-gray-700 mb-1">Wyszukaj Wydarzenia</label>
@@ -134,7 +134,7 @@
 			</div>
 
 			<!-- MAP -->
-			<div class="bg-white rounded-xl shadow p-4 mb-8">
+			<div class="bg-white rounded-xl shadow p-4 mb-8 relative z-10">
 				<h2 class="text-lg font-semibold mb-2">Mapa wydarzeń</h2>
 				<div
 					bind:this={mapContainer}
@@ -154,6 +154,7 @@
 								<h2 class="text-2xl font-bold text-gray-900 mt-1">{event.Name}</h2>
 								<p class="text-gray-700 mb-4 text-sm leading-relaxed">{event.Description}</p>
 							</div>
+								<a class="px-6 py-2 text-blue-dark hover:cursor-pointer text-xs" href="/volunteer/chat">Porozmawiaj z organizatorem</a>
 							<div class="bg-gray-50 p-4">
 								<button
 									on:click={() => handleRequestParticipation(event.UserId)}
@@ -175,5 +176,5 @@
 	</div>
 
 	<!-- CHATBOT -->
-	<div class="w-[200px]"><Chatbot/></div>
+	<div class="fixed inset-y-0 right-0 z-30"><Chatbot/></div>
 </div>

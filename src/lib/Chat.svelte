@@ -1,6 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 
+	export let flip = false;
+
 	// --- MOCK DATA ---
 	// In a real app, this would come from an API.
 	let conversations = [
@@ -62,8 +64,21 @@
 		}
 	];
 
+	if (flip) {
+		for (const sender of conversations) {
+			for (const message of sender.messages) {
+				if (message.sender === "participant") {
+					message.sender = "me";
+				} else {
+					
+					message.sender = "participant";
+				}
+			}
+		}
+	}
+
 	// --- STATE ---
-	let selectedConversationId = 1;
+	let selectedConversationId = 2;
 	let newMessageText = '';
 	let chatContainer;
 

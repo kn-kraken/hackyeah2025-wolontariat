@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	// --- MOCK DATA ---
 	// In a real application, this data would be fetched from your backend API.
 	export let data;
@@ -53,24 +55,24 @@
 			</h2>
 			<form on:submit|preventDefault={handleRegisterEvent} class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div class="md:col-span-2">
-					<label for="title" class="block text-sm font-medium text-gray-700">Event Title</label>
+					<label for="title" class="block text-sm font-medium text-gray-700">Nazwa Wydarzenia</label>
 					<input type="text" id="title" bind:value={newEvent.title} required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div>
-					<label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+					<label for="location" class="block text-sm font-medium text-gray-700">Miejsce</label>
 					<input type="text" id="location" bind:value={newEvent.location} required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div>
-					<label for="duration" class="block text-sm font-medium text-gray-700">Duration (e.g., 4 hours)</label>
+					<label for="duration" class="block text-sm font-medium text-gray-700">Czas Trwania</label>
 					<input type="text" id="duration" bind:value={newEvent.duration} required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div class="md:col-span-2">
-					<label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+					<label for="description" class="block text-sm font-medium text-gray-700">Opis Wydarzenia</label>
 					<textarea id="description" rows="4" bind:value={newEvent.description} required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"></textarea>
 				</div>
 				<div class="md:col-span-2">
-					<label for="requirements" class="block text-sm font-medium text-gray-700">Requirements (comma-separated)</label>
-					<input type="text" id="requirements" bind:value={newEvent.requirements} placeholder="e.g., Age 18+, First-Aid certified" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"/>
+					<label for="requirements" class="block text-sm font-medium text-gray-700">Wymagania (rozdzielone przecinkami)</label>
+					<input type="text" id="requirements" bind:value={newEvent.requirements} placeholder="np., Wiek 18+, Znajomosc jezyka francuskiego" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"/>
 				</div>
 				<div class="md:col-span-2 text-right">
 					<button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
@@ -81,25 +83,26 @@
 		</section>
 
 		<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-12 gap-8">
-			<section class="lg:col-span-2">
-				<h2 class="text-2xl font-bold text-gray-900 mb-4">Twoje nadchodzące wydarzenia</h2>
+			<section class="lg:col-span-2 ">
+				<h2 class="text-2xl font-bold text-gray-900 mb-4" >Twoje nadchodzące wydarzenia</h2>
 				<div class="space-y-4">
 					{#if upcomingEvents.length > 0}
-						{#each upcomingEvents as event (event.id)}
-							<div class="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+						{#each upcomingEvents as event }
+											{@const cap = Math.round(Math.random() * 40)}
+							<div on:click={() => goto("/organizer/event")} class="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 								<div class="flex-grow">
-									<p class="text-sm text-gray-500">{new Date(event.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-									<h3 class="text-xl font-semibold text-gray-800">{event.title}</h3>
-									<p class="text-sm text-gray-600">{event.location}</p>
+									<p class="text-sm text-gray-500">{new Date(event.StartTime).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+									<h3 class="text-xl font-semibold text-gray-800">{event.Name}</h3>
+									<p class="text-sm text-gray-600">{event.Latitude}</p>
 									<div class="mt-2">
 										<span class="text-sm font-medium text-blue-800 bg-blue-100 rounded-full px-3 py-1">
-											{event.participants} / {event.capacity} participants
+											{Math.round(cap * Math.random())} / {cap} uczestnikow
 										</span>
 									</div>
 								</div>
 								<div class="flex-shrink-0 flex sm:flex-col justify-start gap-2">
-									<button on:click={() => handleViewApplicants(event.id)} class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">Applicants</button>
-									<button on:click={() => handleEditEvent(event.id)} class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">Edit</button>
+									<button on:click={() => handleViewApplicants(event.id)} class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">Uczestnicy</button>
+									<button on:click={() => handleEditEvent(event.id)} class="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors">Edytuj</button>
 								</div>
 							</div>
 						{/each}
@@ -117,12 +120,12 @@
 							<div class="bg-white rounded-lg shadow-md p-4">
 								<div class="flex justify-between items-start">
 									<div>
-										<p class="font-bold text-gray-800">{msg.SenderId}</p>
+										<p class="font-bold text-gray-800">Beata Kruch</p>
 									</div>
 									<p class="text-xs text-gray-500 flex-shrink-0 ml-2">{msg.time}</p>
 								</div>
-								<p class="text-gray-700 mt-2 text-sm">{msg.body}</p>
-								<button class="text-sm font-semibold text-blue-600 hover:text-blue-800 mt-3">Odpowiedz</button>
+								<p class="text-gray-700 mt-2 text-sm">Super, dzięki za potwierdzenie!</p>
+								<a href="/organizer/chat" class="text-sm font-semibold text-blue-600 hover:text-blue-800 mt-3">Odpowiedz</a>
 							</div>
 						{/each}
 					{:else}

@@ -53,9 +53,12 @@
 			sendMessage();
 		}
 	}
+	let open = false;
 </script>
 
-<div class="chatbot-container">
+<div class="chatbot-container h-full {open ? 'w-[500px]' : 'w-[40px]'} z-30">
+	<div class="bg-gray-100 p-3 text-xl border-b border-gray-400" on:click={() => open = !open}>{open ? '>' : '<'}</div>
+	{#if open}
 	<div class="messages-container">
 		{#each messages as message}
 			<div class="message {message.sender}">
@@ -73,13 +76,12 @@
 		/>
 		<button on:click={sendMessage} class="send-button">Send</button>
 	</div>
+	{/if}
 </div>
 
 <style>
 	.chatbot-container {
-		max-width: 500px;
 		border: 1px solid #ddd;
-		border-radius: 8px;
 		display: flex;
 		flex-direction: column;
 		background: white;
@@ -114,7 +116,7 @@
 	}
 
 	.user .message-text {
-		background: #007bff;
+		background: var(--colors-blue-dark);
 		color: white;
 	}
 
@@ -139,19 +141,15 @@
 	}
 
 	.message-input:focus {
-		border-color: #007bff;
+		border-color: var(--color-blue-dark);
 	}
 
 	.send-button {
 		padding: 8px 16px;
-		background: #007bff;
+		background: var(--color-blue-dark);
 		color: white;
 		border: none;
 		border-radius: 20px;
 		cursor: pointer;
-	}
-
-	.send-button:hover {
-		background: #0056b3;
 	}
 </style>
