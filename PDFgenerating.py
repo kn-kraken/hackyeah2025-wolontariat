@@ -1,21 +1,72 @@
-from PyPDF2 import PdfReader, PdfWriter, PageObject
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+# we know some glyphs are missing, suppress warnings
+import reportlab.rl_config
+reportlab.rl_config.warnOnMissingFontGlyphs = 0
 
-reader = PdfReader("zaswiadczenie_wolontariackie_wzor.pdf")
-writer = PdfWriter()
+font = "DejaVuSans"
+bold_font = "DejaVuSansBd"
 
-page = reader.pages[0]
+pdfmetrics.registerFont(TTFont(bold_font, 'DejaVuSans-Bold.ttf'))
+pdfmetrics.registerFont(TTFont(font, 'DejaVuSans.ttf'))
 
-fields = reader.get_fields()
-print("Dostępne pola formularza:")
-print(fields)
+margin = inch
+pagesize = (595.27,841.89)
+title_font_size = 12
+text_font_size = 11
+line_height = 20
+max_width = pagesize[0] - margin
+line_separation = 20
+indent = margin / 2
 
-writer.add_page(page)
+def hello(c, volunteer, organiser, date, event, tasks):
+    c.translate(0, pagesize[1])
 
-writer.update_page_form_field_values(
-    writer.pages[0], {"fieldname": "some filled in text"}
-)
+    
+    c.setFont(bold_font, text_font_size)
+    c.drawString(max_width - c.stringWidth(date, font, text_font_size), -margin - indent, date)
+    c.setFont(bold_font, title_font_size)
+    c.drawString(1.5*margin, -2*margin, u"ZAŚWIADCZENIE O ODBYTYM WOLONTARIACIE")
+    c.setFont(font, title_font_size)
+    next_line_y = wrapped_text(c, u'Zaświadcza się, że  {} w dniu {} odbył(a) wolontariat na rzecz {} przy wydarzeniu "{}"".'.format(volunteer, date, organiser, event), margin, -2.5*inch, max_width, line_height)
+    next_line_y = wrapped_text(c, "Wykonane zadania obejmowały: ", margin, next_line_y, max_width, line_height)
+    for task in tasks:
+        next_line_y = wrapped_text(c, f" • {task}", margin + indent, next_line_y, max_width, line_height )
 
-# write "output" to PyPDF2-output.pdf
-with open("filled-out.pdf", "wb") as output_stream:
-    writer.write(output_stream)
+def wrapped_text(c, text, x, y, max_width, line_height):
+    words = text.split()
+    lines = []
+    current_line = "    "
+    
+    for word in words:
+        test_line = current_line + word + " "
+        if c.stringWidth(test_line, font, text_font_size) + x <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line)
+            current_line = word + " "
+    lines.append(current_line)
 
+    
+    for line in lines:
+        c.drawString(x, y, line)
+        y -= line_height 
+    x += c.stringWidth(lines[-1], bold_font, text_font_size)
+    y -= line_separation
+    return y
+
+
+c = canvas.Canvas("hello.pdf")
+tasks = [
+    "Upiekł pizzę",
+    "Zaprojektował układ strony głównej",
+    "Napisał frontend i backend",
+    "Wypił piwo",
+    "Ułożył napis 'cyc' z bloków",
+    "Sprzedał 2 czapki przeciwko 5G",
+]
+hello(c, "Wiktor Pytlewski", "Krakow Digital Volunteer Centre", "4.10.2025r.", "HackYeah 2025", tasks)
+c.save()
