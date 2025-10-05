@@ -1,4 +1,4 @@
-import { Database } from 'bun:sqlite';
+import Database from 'better-sqlite3';
 
 // --- Type Declarations for Database Rows ---
 
@@ -22,7 +22,13 @@ export interface Organization {
   UserId: number;
   Name: string;
   Description: string;
-  Type: 'Organizacja Pozarządowa' | 'Fundacja' | 'Szkoła' | 'Uniwersytet' | 'Instytucja Kultury' | 'Jednostka Miejska';
+  Type:
+    | 'Organizacja Pozarządowa'
+    | 'Fundacja'
+    | 'Szkoła'
+    | 'Uniwersytet'
+    | 'Instytucja Kultury'
+    | 'Jednostka Miejska';
 }
 
 /** Represents a row from the 'Volunteer' table. */
@@ -38,12 +44,20 @@ export interface Event {
   EventId: number;
   Name: string;
   Description: string;
-  Category: 'Środowisko' | 'Edukacja' | 'Zdrowie' | 'Społeczność' | 'Kultura' | 'Sport' | 'Zwierzęta' | 'Inne';
+  Category:
+    | 'Środowisko'
+    | 'Edukacja'
+    | 'Zdrowie'
+    | 'Społeczność'
+    | 'Kultura'
+    | 'Sport'
+    | 'Zwierzęta'
+    | 'Inne';
   Latitude: number;
   Longitude: number;
-  StartTime: string; // Stored as DATETIME string
-  EndTime: string;   // Stored as DATETIME string
-  ApplicationDeadline: string; // Stored as DATETIME string
+  StartTime: string; // DATETIME string
+  EndTime: string; // DATETIME string
+  ApplicationDeadline: string; // DATETIME string
   UserId: number;
 }
 
@@ -62,22 +76,17 @@ export interface LatestMessageWithSender extends Message {
 /**
  * Initializes and returns the SQLite database connection.
  * @param dbPath The path to the SQLite database file. Defaults to './db.sqlite'.
- * @returns The Bun.Database instance.
+ * @returns The better-sqlite3 Database instance.
  */
-export function initializeDb(dbPath: string = './db.sqlite'): Database {
+export function initializeDb(dbPath: string = './db.sqlite'): Database.Database {
   const db = new Database(dbPath);
   return db;
 }
 
-const db = initializeDb();
 
+const db = initializeDb();
 // --- Data Fetching Functions ---
 
-/**
- * Fetches all events from the database.
- * @param db The connected Bun.Database instance.
- * @returns A promise that resolves to an array of all events with their organizer's name.
- */
 export function getAllEvents(): EventWithOrganizer[] {
   const query = `
     SELECT
@@ -88,85 +97,58 @@ export function getAllEvents(): EventWithOrganizer[] {
     JOIN
       Organization O ON E.UserId = O.UserId;
   `;
-  const statement = db.query(query);
+  const statement = db.prepare(query);
   return statement.all() as EventWithOrganizer[];
 }
 
-/**
- * Fetches all events for a given organizer that start in less than a month from now.
- * @param db The connected Bun.Database instance.
- * @param organizationId The UserId of the organizer (OrganizationId in the Event table).
- * @returns A promise that resolves to an array of relevant events.
- */
-export function getUpcomingEventsForOrganizer( organizationId: number): Event[] {
-  // SQLite's 'datetime('now', '+1 month')' calculates one month from the current date.
+export function getUpcomingEventsForOrganizer(organizationId: number): Event[] {
   const query = `
     SELECT
       *
     FROM
       Event
     WHERE
-      UserId = $organizationId
+      UserId = @organizationId
       AND StartTime < datetime('now', '+1 month')
-      AND StartTime >= datetime('now'); -- Ensures only future events are returned
+      AND StartTime >= datetime('now');
   `;
-  const statement = db.query(query);
-  return statement.all({ $organizationId: organizationId }) as Event[];
+  const statement = db.prepare(query);
+  return statement.all({ organizationId }) as Event[];
 }
 
-/**
- * Fetches all unread messages for a given receiving user.
- * @param db The connected Bun.Database instance.
- * @param receiverId The UserId of the receiving user.
- * @returns A promise that resolves to an array of unread messages.
- */
-export function getUnreadMessagesForUser( receiverId: number): Message[] {
+export function getUnreadMessagesForUser(receiverId: number): Message[] {
   const query = `
     SELECT
       *
     FROM
       Message
     WHERE
-      ReceiverId = $receiverId
+      ReceiverId = @receiverId
       AND read = 0
     ORDER BY
       time DESC;
   `;
-  const statement = db.query(query);
-  return statement.all({ $receiverId: receiverId }) as Message[];
+  const statement = db.prepare(query);
+  return statement.all({ receiverId }) as Message[];
 }
 
-/**
- * Fetches all messages between a specific sending user and a specific receiving user.
- * @param db The connected Bun.Database instance.
- * @param receiverId The UserId of the receiving user.
- * @param senderId The UserId of the sending user.
- * @returns A promise that resolves to an array of messages between the two users, ordered by time.
- */
-export function getConversationMessages( receiverId: number, senderId: number): Message[] {
+export function getConversationMessages(receiverId: number, senderId: number): Message[] {
   const query = `
     SELECT
       *
     FROM
       Message
     WHERE
-      (ReceiverId = $receiverId AND SenderId = $senderId)
-      OR (ReceiverId = $senderId AND SenderId = $receiverId)
+      (ReceiverId = @receiverId AND SenderId = @senderId)
+      OR (ReceiverId = @senderId AND SenderId = @receiverId)
     ORDER BY
       time ASC;
   `;
-  const statement = db.query(query);
-  return statement.all({ $receiverId: receiverId, $senderId: senderId }) as Message[];
+  const statement = db.prepare(query);
+  return statement.all({ receiverId, senderId }) as Message[];
 }
 
-/**
- * Fetches the latest message for every unique sending user for a given receiving user.
- * This is typically used to populate an inbox/chat list view.
- * @param db The connected Bun.Database instance.
- * @param receiverId The UserId of the receiving user.
- * @returns A promise that resolves to an array of the latest messages with sender details.
- */
-export function getLatestMessagesBySender( receiverId: number): LatestMessageWithSender[] {
+export function getLatestMessagesBySender(receiverId: number): LatestMessageWithSender[] {
   const query = `
     SELECT
       M.SenderId,
@@ -185,7 +167,7 @@ export function getLatestMessagesBySender( receiverId: number): LatestMessageWit
         FROM
           Message
         WHERE
-          ReceiverId = $receiverId -- We are interested in messages where the current user is the receiver
+          ReceiverId = @receiverId
         GROUP BY
           SenderId
       ) AS Latest
@@ -193,39 +175,40 @@ export function getLatestMessagesBySender( receiverId: number): LatestMessageWit
     JOIN
       User U ON M.SenderId = U.UserId
     WHERE
-      M.ReceiverId = $receiverId -- Safety check
+      M.ReceiverId = @receiverId
     ORDER BY
       M.time DESC;
   `;
-  const statement = db.query(query);
-  return statement.all({ $receiverId: receiverId }) as LatestMessageWithSender[];
+  const statement = db.prepare(query);
+  return statement.all({ receiverId }) as LatestMessageWithSender[];
 }
 
 export function getUser(username: string): { UserId: number; isOrg: boolean } | null {
-  const org = db.query(`
-    SELECT
-    UserId
-    FROM
-    User JOIN Organization USING(UserId) WHERE Username = $username;
-  `).get({ $username: username });
-  if (org != null) {
-    return {
-      UserId: org.UserId,
-      isOrg: true,
-    }
+  const org = db
+    .prepare(`
+      SELECT UserId
+      FROM User
+      JOIN Organization USING(UserId)
+      WHERE Username = @username;
+    `)
+    .get({ username });
+
+  if (org) {
+    return { UserId: org.UserId, isOrg: true };
   }
-  const volunteer = db.query(`
-    SELECT
-    UserId
-    FROM
-    User JOIN Volunteer USING(UserId) WHERE Username = $username;
-  `).get({ $username: username });
-  if (volunteer != null) {
-    return {
-      UserId: volunteer.UserId,
-      isOrg: false,
-    }
+
+  const volunteer = db
+    .prepare(`
+      SELECT UserId
+      FROM User
+      JOIN Volunteer USING(UserId)
+      WHERE Username = @username;
+    `)
+    .get({ username });
+
+  if (volunteer) {
+    return { UserId: volunteer.UserId, isOrg: false };
   }
+
   return null;
 }
-
