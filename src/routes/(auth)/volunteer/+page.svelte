@@ -15,19 +15,18 @@
 	let L: any;
 
 	onMount(async () => {
-		// Import Leaflet tylko po stronie klienta
+		// Import Leaflet only on client side
 		const leaflet = await import('leaflet');
 		L = leaflet;
 
-		// Styl Leaflet (musi być dołączony, żeby kafelki się renderowały!)
 		import('leaflet/dist/leaflet.css');
 
-		// Ustawienie wymiarów kontenera mapy
+		// setting map container size
 		mapContainer.style.width = '100%';
 		mapContainer.style.height = '400px';
 
 		map = L.map(mapContainer, {
-			center: [50.0650,19.9350], // Warszawa
+			center: [50.0650,19.9350],
 			zoom: 12,
 		});
 
@@ -35,15 +34,15 @@
 			attribution: '&copy; OpenStreetMap contributors'
 		}).addTo(map);
 
-		// Symulacja pobrania danych
+		// Simulate loading delay
 		setTimeout(() => {
 			events = allEvents;
 			isLoading = false;
-			map.invalidateSize(); // <<< kluczowy moment, odświeża rozmiar mapy po załadowaniu
+			map.invalidateSize();
 		}, 500);
 	});
 
-	// --- Filtr wydarzeń ---
+	// --- Event Filring ---
 	$: filteredEvents = events.filter((event) => {
 		const searchMatch =
 			searchQuery.length < 2 ||
@@ -58,19 +57,18 @@
 		return searchMatch && locationMatch;
 	});
 
-	// --- Unikalne lokalizacje ---
 	$: uniqueLocations = [...new Set(allEvents.map((event) => event.Latitude))];
 
-	// --- Aktualizacja markerów ---
+	// --- Markers Actualization ---
 	async function updateMarkers() {
 		if (!map || !L) return;
 
-		// usuń stare markery
+		// remove existing markers
 		map.eachLayer((layer) => {
 			if (!(layer instanceof L.TileLayer)) map.removeLayer(layer);
 		});
 
-		// dodaj nowe
+		// add new markers
 		filteredEvents.forEach(event => {
 			if (event.Latitude && event.Longitude) {
 				const marker = L.marker([event.Latitude, event.Longitude])
@@ -86,7 +84,7 @@
 		});
 	}
 
-	// --- Reaktywne odświeżanie mapy ---
+	// --- Reactive map refreshing ---
 	$: if (map && filteredEvents) {
 		updateMarkers();
 	}
@@ -106,7 +104,7 @@
 				</p>
 			</header>
 
-			<!-- FILTRY -->
+			<!-- FILTERS -->
 			<div class="bg-white p-4 sm:p-6 rounded-xl red-shadow mb-8 sticky top-4 z-10">
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 					<div class="md:col-span-2">
@@ -135,7 +133,7 @@
 				</div>
 			</div>
 
-			<!-- MAPA -->
+			<!-- MAP -->
 			<div class="bg-white rounded-xl shadow p-4 mb-8">
 				<h2 class="text-lg font-semibold mb-2">Mapa wydarzeń</h2>
 				<div
@@ -144,7 +142,7 @@
 				></div>
 			</div>
 
-			<!-- LISTA WYDARZEŃ -->
+			<!-- EVENT LIST -->
 			{#if isLoading}
 				<p class="text-center text-gray-500">Ładowanie wydarzeń...</p>
 			{:else if filteredEvents.length > 0}
